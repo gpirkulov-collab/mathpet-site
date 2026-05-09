@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MathPet — Математика для детей через игру</title>
+<meta name="description" content="MathPet помогает детям 4–7 лет учить сложение и вычитание через виртуального питомца. Без рекламы. Работает офлайн.">
+<meta property="og:title" content="MathPet — Математика для детей через игру">
+<meta property="og:description" content="Математика, которая ощущается как игра. Для детей 4–7 лет.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; color: #1a1a1a; background: #FFF8F0; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  nav { position: sticky; top: 0; z-index: 10; background: rgba(255, 248, 240, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #f0e5d8; padding: 16px 0; }
+  nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .logo { font-weight: 800; font-size: 22px; color: #4F46E5; }
+  nav a { color: #555; text-decoration: none; margin-left: 16px; font-size: 14px; }
+  nav a:hover { color: #4F46E5; }
+  .lang-switcher { font-size: 13px; }
+  .lang-switcher a { margin-left: 8px; padding: 2px 6px; border-radius: 4px; }
+  .lang-switcher a.active { background: #4F46E5; color: #fff; }
+
+  .hero { padding: 80px 0 60px; text-align: center; }
+  .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; color: #111; }
+  .hero h1 span { color: #4F46E5; }
+  .hero p.lede { font-size: clamp(17px, 2vw, 21px); color: #555; max-width: 640px; margin: 0 auto 40px; }
+  .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: #111; color: #fff; padding: 14px 28px; border-radius: 14px; text-decoration: none; font-weight: 600; font-size: 16px; transition: transform 0.15s; }
+  .badge:hover { transform: translateY(-2px); }
+  .badge.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+  .badge small { font-size: 11px; font-weight: 400; opacity: 0.7; display: block; margin-top: -2px; }
+
+  section { padding: 80px 0; }
+  section h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin-bottom: 16px; text-align: center; }
+  section p.subheading { text-align: center; color: #666; max-width: 600px; margin: 0 auto 56px; font-size: 17px; }
+
+  .features { background: #fff; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; }
+  .feature { padding: 32px 24px; background: #FFF8F0; border-radius: 16px; }
+  .feature .icon { font-size: 40px; margin-bottom: 16px; }
+  .feature h3 { font-size: 19px; margin-bottom: 8px; font-weight: 700; }
+  .feature p { color: #555; font-size: 15px; }
+
+  .screens { background: linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%); }
+  .screens-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
+  .phone-mock { aspect-ratio: 9/19; background: #fff; border: 8px solid #1a1a1a; border-radius: 28px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 13px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+
+  .why { background: #fff; }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .why-item { text-align: center; padding: 24px; }
+  .why-item .check { display: inline-flex; width: 48px; height: 48px; background: #10B981; color: #fff; border-radius: 50%; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; margin-bottom: 16px; }
+  .why-item h4 { margin-bottom: 8px; font-size: 17px; }
+  .why-item p { color: #666; font-size: 15px; }
+
+  .pricing { background: #FFF8F0; }
+  .pricing-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; margin: 0 auto; }
+  .price-card { background: #fff; border: 2px solid #f0e5d8; border-radius: 20px; padding: 32px 28px; text-align: center; }
+  .price-card.featured { border-color: #4F46E5; position: relative; }
+  .price-card.featured::before { content: "Лучшее предложение"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4F46E5; color: #fff; padding: 4px 16px; border-radius: 12px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .price-card h3 { font-size: 18px; color: #555; margin-bottom: 8px; }
+  .price-card .price { font-size: 38px; font-weight: 800; color: #111; margin-bottom: 4px; }
+  .price-card .price small { font-size: 14px; color: #666; font-weight: 400; }
+  .price-card .trial { color: #10B981; font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+  .price-card ul { list-style: none; text-align: left; }
+  .price-card ul li { padding: 6px 0; color: #555; font-size: 15px; }
+  .price-card ul li::before { content: "✓ "; color: #10B981; font-weight: bold; }
+
+  .faq { background: #fff; }
+  .faq-list { max-width: 720px; margin: 0 auto; }
+  details { border-bottom: 1px solid #f0e5d8; padding: 16px 0; }
+  summary { cursor: pointer; font-weight: 600; font-size: 17px; padding: 8px 0; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; float: right; font-size: 22px; color: #4F46E5; }
+  details[open] summary::after { content: "−"; }
+  details p { padding: 8px 0 0; color: #555; font-size: 15px; }
+
+  footer { background: #111; color: #ccc; padding: 48px 0 32px; }
+  footer .container { display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; }
+  footer .col h5 { color: #fff; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+  footer a { color: #999; text-decoration: none; display: block; padding: 4px 0; font-size: 14px; }
+  footer a:hover { color: #fff; }
+  footer .copyright { width: 100%; padding-top: 24px; border-top: 1px solid #333; font-size: 13px; color: #777; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">MathPet</div>
+    <div>
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Цены</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:support@mathpet.app">Контакты</a>
+      <span class="lang-switcher">
+        <a href="/">EN</a>
+        <a href="/es/">ES</a>
+        <a href="/fr/">FR</a>
+        <a href="/de/">DE</a>
+        <a href="/ru/" class="active">RU</a>
+      </span>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <h1>Математика, которая<br>ощущается как <span>игра</span>.</h1>
+    <p class="lede">MathPet помогает детям 4–7 лет освоить сложение и вычитание, кормя и наряжая собственного виртуального питомца. Без рекламы. Работает офлайн. Сделано под короткое детское внимание.</p>
+    <div class="cta-row">
+      <a href="#" class="badge disabled">
+        <span style="font-size:24px;">📱</span>
+        <span>App Store<br><small>Скоро</small></span>
+      </a>
+      <a href="#" class="badge disabled">
+        <span style="font-size:24px;">🤖</span>
+        <span>Google Play<br><small>Скоро</small></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="features" id="features">
+  <div class="container">
+    <h2>Сделано для самых маленьких</h2>
+    <p class="subheading">Семь типов задач, десять уровней сложности, адаптивный движок, который подстраивается под ребёнка.</p>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="icon">🐉</div>
+        <h3>Питомец, который растёт</h3>
+        <p>Решай задачи → получай звёзды → корми питомца → он эволюционирует через три стадии. Математика и есть геймплей.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🎯</div>
+        <h3>Адаптивная сложность</h3>
+        <p>Elo-подобный движок отслеживает навык по каждому типу задач и подбирает то, что нужно подтянуть.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📵</div>
+        <h3>Работает офлайн</h3>
+        <p>Интернет не нужен для повседневной игры. Прогресс синхронизируется с облаком когда снова появится связь.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🚫</div>
+        <h3>Без рекламы — никогда</h3>
+        <p>Никаких сторонних рекламных сетей. Никаких продаж данных. Зарабатываем только на подписках.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🌍</div>
+        <h3>Пять языков</h3>
+        <p>Английский, испанский, французский, немецкий, русский. Учи математику на родном языке.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⏱️</div>
+        <h3>Короткие сессии</h3>
+        <p>Спроектировано под концентрацию 4–7-летнего. Большинство детей играют по 5–15 минут за раз.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screens">
+  <div class="container">
+    <h2>Как это выглядит</h2>
+    <p class="subheading">Яркие, простые экраны. Большие кнопки. Чтобы играть, читать не обязательно.</p>
+    <div class="screens-grid">
+      <div class="phone-mock">Скриншот 1</div>
+      <div class="phone-mock">Скриншот 2</div>
+      <div class="phone-mock">Скриншот 3</div>
+      <div class="phone-mock">Скриншот 4</div>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="container">
+    <h2>Почему родители выбирают MathPet</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="check">✓</div>
+        <h4>Без рекламы</h4>
+        <p>Никаких баннеров. Никаких всплывающих окон. Никаких брокеров данных.</p>
+      </div>
+      <div class="why-item">
+        <div class="check">✓</div>
+        <h4>Соответствует COPPA</h4>
+        <p>Собираем минимум данных, нужный для работы приложения. Полные подробности в Политике конфиденциальности.</p>
+      </div>
+      <div class="why-item">
+        <div class="check">✓</div>
+        <h4>Отписаться легко</h4>
+        <p>Один тап в настройках App Store / Google Play. Без удерживающих писем.</p>
+      </div>
+      <div class="why-item">
+        <div class="check">✓</div>
+        <h4>Сделано родителем</h4>
+        <p>MathPet появился потому что моему сыну нужно было что-то лучше, чем YouTube.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="container">
+    <h2>Простые цены</h2>
+    <p class="subheading">7 дней бесплатно. Отмени до конца триала и не заплатишь ничего.</p>
+    <div class="pricing-cards">
+      <div class="price-card">
+        <h3>Месячная</h3>
+        <div class="price">$4.99 <small>/ месяц</small></div>
+        <div class="trial">7 дней бесплатно</div>
+        <ul>
+          <li>Безлимитные задачи</li>
+          <li>Все питомцы и аксессуары</li>
+          <li>Ежедневные челленджи</li>
+          <li>Облачная синхронизация</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <h3>Годовая</h3>
+        <div class="price">$29.99 <small>/ год</small></div>
+        <div class="trial">7 дней бесплатно · экономия 50%</div>
+        <ul>
+          <li>Всё то же, что и в месячной</li>
+          <li>Эквивалент $2.50 / месяц</li>
+          <li>Лучше всего для регулярных занятий</li>
+          <li>Отписаться можно в любой момент</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="container">
+    <h2>Частые вопросы</h2>
+    <div class="faq-list">
+      <details>
+        <summary>На какой возраст рассчитан MathPet?</summary>
+        <p>Сделан для 4–7-летних. Младшие могут играть со взрослым; старшие быстро пройдут уровни.</p>
+      </details>
+      <details>
+        <summary>Должен ли ребёнок уметь читать?</summary>
+        <p>Нет. Интерфейс визуальный — иконки, цифры и короткие голосовые подсказки (если включены).</p>
+      </details>
+      <details>
+        <summary>Собираете ли вы данные о моём ребёнке?</summary>
+        <p>Собираем минимум, нужный для работы приложения: email учётной записи (вводит родитель), внутриигровой прогресс, отчёты о сбоях. Не продаём данные, не показываем рекламу, не используем поведенческое профилирование. Полные подробности в <a href="/ru/privacy">Политике конфиденциальности</a>.</p>
+      </details>
+      <details>
+        <summary>Как отписаться от подписки?</summary>
+        <p>Через настройки твоей учётной записи в App Store или Google Play. Мы не можем отписать тебя сами — Apple и Google полностью обрабатывают платежи, и платёжных данных мы не видим.</p>
+      </details>
+      <details>
+        <summary>Есть ли возврат?</summary>
+        <p>Возвраты обрабатывают Apple и Google напрямую по своим правилам. Со своей стороны вернуть деньги мы не можем. 7-дневный бесплатный триал нужен именно для того, чтобы попробовать без оплаты.</p>
+      </details>
+      <details>
+        <summary>Работает ли офлайн?</summary>
+        <p>Да. Математический движок и прогресс питомца работают полностью офлайн. Синхронизация происходит, когда интернет снова появляется.</p>
+      </details>
+      <details>
+        <summary>Как связаться с поддержкой?</summary>
+        <p>Напиши на <a href="mailto:support@mathpet.app">support@mathpet.app</a>. Стараемся отвечать в течение 48 часов.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="col">
+      <h5>MathPet</h5>
+      <p style="color:#999;font-size:14px;max-width:280px;">Математика, которая ощущается как игра. Для детей 4–7 лет.</p>
+    </div>
+    <div class="col">
+      <h5>Продукт</h5>
+      <a href="#features">Возможности</a>
+      <a href="#pricing">Цены</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="col">
+      <h5>Юридическое</h5>
+      <a href="/ru/privacy">Политика конфиденциальности</a>
+      <a href="/ru/terms">Условия использования</a>
+    </div>
+    <div class="col">
+      <h5>Контакты</h5>
+      <a href="mailto:support@mathpet.app">support@mathpet.app</a>
+    </div>
+    <div class="copyright">
+      © 2026 MathPet. Все права защищены.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
