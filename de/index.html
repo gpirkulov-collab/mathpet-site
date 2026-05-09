@@ -41,25 +41,29 @@
   .feature p { color: #555; font-size: 15px; }
   .screens { background: linear-gradient(180deg, #FFF8F0 0%, #FFE8D6 100%); }
   .screens-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
-  .phone-mock { aspect-ratio: 9/19; background: #fff; border: 8px solid #1a1a1a; border-radius: 28px; display: flex; align-items: center; justify-content: center; color: #999; font-size: 13px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+  .phone-mock { aspect-ratio: 9/19; background: #fff; border: 8px solid #1a1a1a; border-radius: 28px; display: flex; flex-direction: column; padding: 14px 10px; gap: 10px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); overflow: hidden; position: relative; }
+  .phone-mock .screen-top { font-size: 11px; font-weight: 700; color: #555; background: rgba(255,248,240,0.95); padding: 4px 10px; border-radius: 8px; align-self: flex-end; }
+  .phone-mock .screen-pet-emoji { font-size: clamp(60px, 14vw, 90px); flex: 1; display: flex; align-items: center; justify-content: center; }
+  .phone-mock .screen-caption { font-size: 12px; font-weight: 700; color: #4F46E5; text-align: center; padding: 6px 0; }
+  .screen-pet { background: linear-gradient(180deg, #FFE8D6 0%, #fff 100%); }
+  .screen-math { background: linear-gradient(180deg, #E8F0FF 0%, #fff 100%); }
+  .screen-shop { background: linear-gradient(180deg, #FFF0F5 0%, #fff 100%); }
+  .screen-levelup { background: linear-gradient(180deg, #FFFBE8 0%, #fff 100%); }
+  .screen-equation { font-size: clamp(22px, 5vw, 30px); font-weight: 800; text-align: center; flex: 1; display: flex; align-items: center; justify-content: center; color: #111; }
+  .screen-options { display: flex; justify-content: space-around; gap: 4px; padding-bottom: 4px; }
+  .screen-options span { background: #4F46E5; color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
+  .screen-options span:first-child { background: #FFE8D6; color: #4F46E5; }
+  .screen-shop-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 4px 0; }
+  .screen-shop-grid span { background: #FFF8F0; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; aspect-ratio: 1; }
+  .screen-levelup-text { font-size: clamp(26px, 6vw, 36px); font-weight: 800; color: #10B981; text-align: center; flex: 1; display: flex; align-items: center; justify-content: center; }
+  .screen-progress { height: 8px; background: #FFE8D6; border-radius: 4px; overflow: hidden; margin: 0 6px; }
+  .screen-progress-fill { height: 100%; width: 70%; background: #10B981; border-radius: 4px; }
   .why { background: #fff; }
   .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
   .why-item { text-align: center; padding: 24px; }
   .why-item .check { display: inline-flex; width: 48px; height: 48px; background: #10B981; color: #fff; border-radius: 50%; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; margin-bottom: 16px; }
   .why-item h4 { margin-bottom: 8px; font-size: 17px; }
   .why-item p { color: #666; font-size: 15px; }
-  .pricing { background: #FFF8F0; }
-  .pricing-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 800px; margin: 0 auto; }
-  .price-card { background: #fff; border: 2px solid #f0e5d8; border-radius: 20px; padding: 32px 28px; text-align: center; }
-  .price-card.featured { border-color: #4F46E5; position: relative; }
-  .price-card.featured::before { content: "Beste Wahl"; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4F46E5; color: #fff; padding: 4px 16px; border-radius: 12px; font-size: 12px; font-weight: 700; }
-  .price-card h3 { font-size: 18px; color: #555; margin-bottom: 8px; }
-  .price-card .price { font-size: 38px; font-weight: 800; color: #111; margin-bottom: 4px; }
-  .price-card .price small { font-size: 14px; color: #666; font-weight: 400; }
-  .price-card .trial { color: #10B981; font-size: 14px; font-weight: 600; margin-bottom: 16px; }
-  .price-card ul { list-style: none; text-align: left; }
-  .price-card ul li { padding: 6px 0; color: #555; font-size: 15px; }
-  .price-card ul li::before { content: "✓ "; color: #10B981; font-weight: bold; }
   .faq { background: #fff; }
   .faq-list { max-width: 720px; margin: 0 auto; }
   details { border-bottom: 1px solid #f0e5d8; padding: 16px 0; }
@@ -83,7 +87,6 @@
     <div class="logo">MathPet</div>
     <div>
       <a href="#features">Funktionen</a>
-      <a href="#pricing">Preise</a>
       <a href="#faq">FAQ</a>
       <a href="mailto:support@mathpet.app">Kontakt</a>
       <span class="lang-switcher">
@@ -134,10 +137,25 @@
     <h2>So sieht es aus</h2>
     <p class="subheading">Helle, einfache Bildschirme. Große Buttons. Lesen ist nicht erforderlich.</p>
     <div class="screens-grid">
-      <div class="phone-mock">Screenshot 1</div>
-      <div class="phone-mock">Screenshot 2</div>
-      <div class="phone-mock">Screenshot 3</div>
-      <div class="phone-mock">Screenshot 4</div>
+      <div class="phone-mock screen-pet">
+        <div class="screen-top">⭐ 42</div>
+        <div class="screen-pet-emoji">🐱</div>
+        <div class="screen-caption">Hallo! Spielen wir!</div>
+      </div>
+      <div class="phone-mock screen-math">
+        <div class="screen-top">⏱ 0:30</div>
+        <div class="screen-equation">2 + 3 = ?</div>
+        <div class="screen-options"><span>4</span><span>5</span><span>6</span></div>
+      </div>
+      <div class="phone-mock screen-shop">
+        <div class="screen-top">⭐ 142</div>
+        <div class="screen-shop-grid"><span>🎩</span><span>👑</span><span>🎀</span><span>🧢</span><span>👓</span><span>🎽</span></div>
+      </div>
+      <div class="phone-mock screen-levelup">
+        <div class="screen-levelup-text">+5 ⭐</div>
+        <div class="screen-progress"><div class="screen-progress-fill"></div></div>
+        <div class="screen-caption">Level up!</div>
+      </div>
     </div>
   </div>
 </section>
@@ -150,27 +168,6 @@
       <div class="why-item"><div class="check">✓</div><h4>COPPA-konform</h4><p>Wir erfassen nur das Nötigste. Details in der Datenschutzerklärung.</p></div>
       <div class="why-item"><div class="check">✓</div><h4>Jederzeit kündbar</h4><p>Ein Tap in den App-Store-/Google-Play-Einstellungen. Keine Halteanrufe.</p></div>
       <div class="why-item"><div class="check">✓</div><h4>Von einem Elternteil</h4><p>MathPet entstand, weil mein Sohn etwas Besseres als YouTube brauchte.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <div class="container">
-    <h2>Einfache Preise</h2>
-    <p class="subheading">7 Tage kostenlos testen. Vor Ende kündigen und nichts zahlen.</p>
-    <div class="pricing-cards">
-      <div class="price-card">
-        <h3>Monatlich</h3>
-        <div class="price">$4.99 <small>/ Monat</small></div>
-        <div class="trial">7 Tage kostenlos</div>
-        <ul><li>Unbegrenzte Aufgaben</li><li>Alle Haustiere und Accessoires</li><li>Tägliche Challenges</li><li>Cloud-Sync</li></ul>
-      </div>
-      <div class="price-card featured">
-        <h3>Jährlich</h3>
-        <div class="price">$29.99 <small>/ Jahr</small></div>
-        <div class="trial">7 Tage kostenlos · 50% sparen</div>
-        <ul><li>Alles aus dem Monatsabo</li><li>Entspricht $2.50 / Monat</li><li>Ideal für tägliche Nutzung</li><li>Jederzeit kündbar</li></ul>
-      </div>
     </div>
   </div>
 </section>
@@ -193,7 +190,7 @@
 <footer>
   <div class="container">
     <div class="col"><h5>MathPet</h5><p style="color:#999;font-size:14px;max-width:280px;">Mathe, das sich wie ein Spiel anfühlt. Für Kinder von 4 bis 7 Jahren.</p></div>
-    <div class="col"><h5>Produkt</h5><a href="#features">Funktionen</a><a href="#pricing">Preise</a><a href="#faq">FAQ</a></div>
+    <div class="col"><h5>Produkt</h5><a href="#features">Funktionen</a><a href="#faq">FAQ</a></div>
     <div class="col"><h5>Rechtliches</h5><a href="/de/privacy">Datenschutzerklärung</a><a href="/de/terms">Nutzungsbedingungen</a></div>
     <div class="col"><h5>Kontakt</h5><a href="mailto:support@mathpet.app">support@mathpet.app</a></div>
     <div class="copyright">© 2026 MathPet. Alle Rechte vorbehalten.</div>
